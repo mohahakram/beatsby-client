@@ -1,0 +1,120 @@
+
+$black: #040404;
+$greyDark: #131313;
+$greyLight: #282828;
+$greyText: #b3b3b3;
+$greyNav: #090909;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  display: flex ;
+  height: calc(100vh - 90px);
+  background-color: $greyDark;  
+}
+
+.navBar {
+  display: flex;
+  flex-direction: column;
+  width:232px;
+  min-width: 232px;
+  height: 100%;
+  padding: 10px;
+  background: $black;
+  .logo {
+    padding: 1.1rem 0.8rem;
+    svg {
+      max-width: 130px;
+      path {
+        fill: white;
+      }
+    }
+  }
+  ul {
+    li {
+      color: $greyText;
+      list-style: none;
+      border-radius: 5px;
+      padding: 0.8rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3 ease ease-in-out;
+      &.active {
+        background: $greyLight;
+      }
+      &:hover {
+        color: white;
+      }
+    }
+  }
+  .contact {
+    font-size: 0.9rem;
+    margin-top: auto;
+    // text-align: center;
+    padding: 0.8rem;
+    color: $greyText;
+
+  }
+
+}
+
+.outerWrap{ 
+  background: grey;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.musicControls {
+  position: relative;
+  z-index: 2;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $greyLight;
+  color: white;
+}
+
+.upperNav {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+  padding: 1.8rem 1rem;
+  background: $greyNav;
+  color: white;
+}
+
+.main {
+  width: 100%;
+  color: white;
+}
+
+.cardWrap {
+  .card {
+    width: 230px;
+    padding: 1.2rem;
+    border-radius: 10px;
+    overflow: hidden;
+    background: $greyLight;
+    .cardImage {
+      height: 190px;
+      width: 190px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .cardContent {
+      padding: 1.2rem 0;
+      h3 {
+        font-weight: 600;
+      }
+    }
+  }
+}
