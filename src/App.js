@@ -1,35 +1,47 @@
 import React, { useState, useMemo } from 'react';
-import axios from 'axios';
 // import './fontawesome.js'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
-import Nav from './components/Nav';
-import Main from './components/Main';
 import './App.scss';
 
+import UpperNav from './components/UpperNav';
+import Nav from './components/Nav';
+import Main from './components/Main';
+import MusicControls from './components/MusicControls';
+
 import UserContext from "./config/auth/UserContext";
-import CountContext from "./config/auth/CountContext";
+import AuthContext from './config/auth/AuthContext';
+import BeatContext from './config/context/BeatContext';
+import PlayingContext from './config/context/PlayingContext';
+import PauseContext from './config/context/PauseContext';
 
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({});
-  const [currentCount, setCurrentCount] = useState(23);
+  const [currentUser, setCurrentUser] = useState();
+  const [isAuthorized, setIsAuthorized] = useState();
+  const [currentBeat, setCurrentBeat] = useState();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPaused, setIsPaused] = useState();
 
-  // const value = useMemo( () => ({ currentUser, setCurrentUser }), [ currentUser, setCurrentUser ]);
 
   return (
-    <div className="outerWrap">
+    <div className="outer-wrap">
       <div className="App">
         < UserContext.Provider value={ [currentUser, setCurrentUser] } >
-          < CountContext.Provider value={ [currentCount, setCurrentCount] } >
+        < AuthContext.Provider value={ [isAuthorized, setIsAuthorized] } >
+        < BeatContext.Provider value={ [currentBeat, setCurrentBeat] } >
+        < PlayingContext.Provider value={ [isPlaying, setIsPlaying] } >
+        < PauseContext.Provider value={ [isPaused, setIsPaused] } >
+            < UpperNav />    
             < Nav />    
             < Main />
-          </ CountContext.Provider >
+            < MusicControls />
+        </ PauseContext.Provider >
+        </ PlayingContext.Provider >
+        </ BeatContext.Provider >
+        </ AuthContext.Provider >
         </ UserContext.Provider >
         
       </div>
-      <div className="musicControls">music controls</div>
     </div>
   );
 }
