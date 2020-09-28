@@ -1,40 +1,37 @@
-import React from 'react'
-import { Switch, Route } from 'react-router-dom'
-import ProtectedRoute from '../config/auth/ProtectedRoute'
+import React from "react";
+import { Switch, Route } from "react-router-dom";
 
-import Beats from './Beats'
-import Register from './Register'
-import Login from './Login'
-import UploadBeat from './UploadBeat'
-import Playlist from './Playlist'
-import Artist from './Artist'
-import { useState, useEffect, useContext } from 'react'
-import UserContext from '../config/auth/UserContext'
+import { ProtectedRoute } from "../config/auth/ProtectedRoute";
+
+import Home from "./Home";
+import Register from "./Register";
+import Login from "./Login";
+import Beats from "./Beats";
+import UploadBeat from "./UploadBeat";
+import Playlist from "./Playlist";
+import Artist from "./Artist";
+import Dashboard from "./Dashboard";
+import Cart from "./Cart";
 
 const Main = () => {
-    const [currentUser, setCurrentUser] = useContext(UserContext)
-    console.log(currentUser);
-    // useEffect(() => {
-    // const setuser = setCurrentUser('ddddpppppppp')
-    // console.log(currentUser)
-        
-    // }, [])
-    
-    return(
+    return (
         <div className="main">
-            <div className="upperNav">test test test</div>
-            <div className="mainContent"></div>
+            <div className="main-content">
                 <Switch>
-                    <Route path="/" exact>test</Route>        
+                    <Route path="/" exact component={Home}></Route>
+                    <Route path="/home" component={Home}></Route>
                     <Route path="/beats" component={Beats}></Route>
                     <Route path="/register" component={Register}></Route>
                     <Route path="/login" component={Login}></Route>
-                    <ProtectedRoute path="/upload" component={UploadBeat}/>
+                    <ProtectedRoute path="/upload" component={UploadBeat} />
                     <Route path="/playlist/:id" component={Playlist}></Route>
                     <Route path="/artist/:id" component={Artist}></Route>
+                    <ProtectedRoute path="/dashboard" component={Dashboard} />
+                    <ProtectedRoute path="/cart" component={Cart} />
                 </Switch>
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default Main
+export default Main;
