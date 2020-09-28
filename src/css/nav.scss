@@ -1,0 +1,312 @@
+@import '../App.scss';
+
+//! navbar
+@keyframes blink {
+    50% {
+        opacity: 0.0;
+    }
+}
+@-webkit-keyframes blink {
+    50% {
+        opacity: 0.0;
+    }
+}
+
+.burger-menu {
+    display: none;
+}
+
+
+.nav-bar-wraper{
+    height: 100%;
+    .nav-bar {
+        display: flexbox;
+        flex-direction: column;
+        width: 232px;
+        min-width: 232px;
+        height: 100%;
+        padding: 10px;
+        background: $black;
+        font-size: 0.9rem;
+        font-weight: 600;
+        .logo {
+            padding: 0rem 0.8rem 1.1rem;
+            a {
+                display: flex;
+                flex-direction: row;
+                text-decoration: none;
+                color: $white;
+                p {
+                    font-size: 2rem;
+                }
+                .blink {
+                width: 1.5rem;
+                height: 2.5rem;
+                border-bottom: 4px solid #5599ff;
+                animation: blink 1s step-start 0s infinite;
+                -webkit-animation: blink 1s step-start 0s infinite;
+                }
+            }
+        }
+        .hide-nav {
+        display: none;
+        }
+        ul {
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 64px);
+            a {
+                text-decoration: none;
+                li {
+                    height: 2.7rem;
+                    padding: 0.6rem 1.1rem;
+                    list-style: none;
+                    border-radius: 5px;
+                    color: $greyText;
+                    cursor: pointer;
+                    transition: all 0.3 ease ease-in-out;
+                    &.active {
+                        div {
+                            padding-bottom: 0.2rem;
+
+                        }
+
+                        background: $greyLight;
+                        color: $white;
+                    }
+                    &:hover {
+                        color: $white;
+                    }
+                }
+                svg {
+                    margin-right: 1.1rem;
+                    transform: scale(1.5);
+                }
+            }
+            a:last-child {
+                display: none;
+                text-decoration: none;
+                margin-top: auto;
+                .contact {
+                    font-size: 0.9rem;
+                    padding: 0.6rem 1.1rem;
+                    color: $greyText;
+                    &:hover {
+                        color: $white;
+                    }
+                    svg {
+                        margin-right: 1.1rem;
+                        transform: scale(1.5);
+                    }
+                }
+            }
+        }
+    }
+}
+.hidden-nav{
+    height: 100%;
+    .nav-bar {
+        display: flexbox;
+        flex-direction: column;
+        width: 232px;
+        min-width: 232px;
+        height: 100%;
+        padding: 10px;
+        background: $black;
+        font-size: 0.9rem;
+        font-weight: 600;
+        .logo {
+            padding: 0rem 0.8rem 1.1rem;
+            a {
+                display: flex;
+                flex-direction: row;
+                text-decoration: none;
+                color: $white;
+                p {
+                    font-size: 2rem;
+                }
+                .blink {
+                width: 1.5rem;
+                height: 2.5rem;
+                border-bottom: 4px solid #5599ff;
+                animation: blink 1s step-start 0s infinite;
+                -webkit-animation: blink 1s step-start 0s infinite;
+                }
+            }
+        }
+        .hide-nav {
+        display: none;
+        }
+        ul {
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 64px);
+            a {
+                text-decoration: none;
+                li {
+                    height: 2.7rem;
+                    padding: 0.6rem 1.1rem;
+                    list-style: none;
+                    border-radius: 5px;
+                    color: $greyText;
+                    cursor: pointer;
+                    transition: all 0.3 ease ease-in-out;
+                    &.active {
+                        div {
+                            padding-bottom: 0.2rem;
+
+                        }
+
+                        background: $greyLight;
+                        color: $white;
+                    }
+                    &:hover {
+                        color: $white;
+                    }
+                }
+                svg {
+                    margin-right: 1.1rem;
+                    transform: scale(1.5);
+                }
+            }
+            a:last-child {
+                display: none;
+                text-decoration: none;
+                margin-top: auto;
+                .contact {
+                    font-size: 0.9rem;
+                    padding: 0.6rem 1.1rem;
+                    color: $greyText;
+                    &:hover {
+                        color: $white;
+                    }
+                    svg {
+                        margin-right: 1.1rem;
+                        transform: scale(1.5);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 0px) and (max-width: 480px){
+    .burger-menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 57px;
+        height: 57px;
+        position: absolute;
+        z-index: 3;
+        padding-bottom: 0.2rem;
+        color: $white;
+        svg {
+            transform: scale(1.5);
+        }
+        .nav-bar {
+            display: none;
+        }
+    }
+    .hidden-nav {
+        .nav-bar {
+            display: none;
+        }
+    }
+    .nav-bar-wraper{
+        height: 100%;
+        position: absolute;
+        z-index: 3;
+        // display: none;
+        .nav-bar {
+            display: flexbox;
+            flex-direction: column;
+            width: 232px;
+            min-width: 232px;
+            height: 100%;
+            padding: 10px;
+            background: $black;
+            font-size: 0.9rem;
+            font-weight: 600;
+            .hide-nav {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                padding: 2rem 1rem 3rem 0;
+                color: #f9f9f9;
+                svg {
+                    transform: scale(1.5);
+                }
+            }
+            .logo {
+                padding: 0rem 0.8rem 1.1rem;
+                a {
+                    display: flex;
+                    flex-direction: row;
+                    text-decoration: none;
+                    color: $white;
+                    p {
+                        font-size: 2rem;
+                    }
+                    .blink {
+                    width: 1.5rem;
+                    height: 2.5rem;
+                    border-bottom: 4px solid #5599ff;
+                    animation: blink 1s step-start 0s infinite;
+                    -webkit-animation: blink 1s step-start 0s infinite;
+                    }
+                }
+            }
+            ul {
+                display: flex;
+                flex-direction: column;
+                height: calc(100% - 64px);
+                a {
+                    text-decoration: none;
+                    li {
+                        height: 2.7rem;
+                        padding: 0.6rem 1.1rem;
+                        list-style: none;
+                        border-radius: 5px;
+                        color: $greyText;
+                        cursor: pointer;
+                        transition: all 0.3 ease ease-in-out;
+                        &.active {
+                            div {
+                                padding-bottom: 0.2rem;
+                            
+                            }
+                        
+                            background: $greyLight;
+                            color: $white;
+                        }
+                        &:hover {
+                            color: $white;
+                        }
+                    }
+                    svg {
+                        margin-right: 1.1rem;
+                        transform: scale(1.5);
+                    }
+                }
+                a:last-child {
+                    display: none;
+                    text-decoration: none;
+                    margin-top: auto;
+                    .contact {
+                        font-size: 0.9rem;
+                        padding: 0.6rem 1.1rem;
+                        color: $greyText;
+                        &:hover {
+                            color: $white;
+                        }
+                        svg {
+                            margin-right: 1.1rem;
+                            transform: scale(1.5);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,156 @@
+@import "../App.scss";
+
+//! Register , Login , Upload page
+.input-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 450px;
+    padding: 0 5%;
+    margin: 0 auto;
+    h2 {
+        margin: 3rem 0 3rem;
+    }
+    form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        input {
+            margin-top: 1rem;
+            border: none;
+            border-radius: unset;
+            border-bottom: 1px solid $greyLight;
+            background: none;
+            color: $white;
+            font-size: 0.9rem;
+            &::placeholder {
+                color: $greyText;
+            }
+            &:focus {
+                outline: none;
+                caret-color: $white;
+                border-bottom: 1px solid $white;
+                color: $white;
+                &::placeholder {
+                    color: $white;
+                }
+            }
+        }
+        select {
+            margin-top: 1rem;
+            background: none;
+            font-size: 0.9rem;
+            border: none;
+            border-bottom: 1px solid $greyLight;
+            color: $greyText;
+            // text-indent: -3px;
+            &:focus {
+                outline: none;
+            }
+        }
+        button {
+            margin-top: 2rem;
+            padding: 0.5rem 0;
+            border: none;
+            border-radius: unset;
+            outline: none;
+            background: $white;
+            color: $black;
+            font-size: 0.9rem;
+            font-weight: 600;
+            &:hover {
+                // transform: scale(1.02);
+                color: $white;
+                background: $blueLight;
+            }
+            &:active {
+                transform: scale(0.97);
+            }
+        }
+    }
+    .error {
+        margin-top: 1rem;
+        color: $redLight;
+    }
+    .fallback {
+        margin-top: 1rem;
+        a:visited {
+            text-decoration: none;
+            color: $white;
+        }
+    }
+}
+
+@media screen and (min-width: 0px) and (max-width: 480px) {
+    .input-main-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        .input-div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            padding: 0 5%;
+            margin: 0 auto;
+            h2 {
+                margin: 0 0 3rem;
+            }
+            form {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                input {
+                    margin-top: 1rem;
+                    border: none;
+                    border-bottom: 1px solid $greyLight;
+                    background: none;
+                    color: $white;
+                    font-size: 0.9rem;
+                    &::placeholder {
+                        color: $greyText;
+                    }
+                    &:focus {
+                        outline: none;
+                        caret-color: $white;
+                        border-bottom: 1px solid $white;
+                        color: $white;
+                        &::placeholder {
+                            color: $white;
+                        }
+                    }
+                }
+                select {
+                    margin-top: 1rem;
+                    background: none;
+                    font-size: 0.9rem;
+                    border: none;
+                    border-bottom: 1px solid $greyLight;
+                    color: $greyText;
+                    // text-indent: -3px;
+                    &:focus {
+                        outline: none;
+                    }
+                }
+                button {
+                    margin-top: 2rem;
+                    padding: 0.5rem 0;
+                    border: none;
+                    outline: none;
+                    background: $white;
+                    color: $black;
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    &:hover {
+                        transform: scale(0.97);
+                        background: $greyText;
+                    }
+                    &:active {
+                        transform: scale(0.97);
+                    }
+                }
+            }
+        }
+    }
+}
