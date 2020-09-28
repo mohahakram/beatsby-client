@@ -4,382 +4,49 @@ $greyLight: #282828;
 $greyText: #b3b3b3;
 $greyNav: #090909;
 $white: #f9f9f9;
+$blueLight: #5599ffb0;
+$greenDark: #55ff55;
+$greenLight: #77ff77e0;
+$redDark: #ff5555;
+$redLight: #ff7777e0;
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-family: "Noto Sans JP", "Muli", sans-serif;
 }
 
-.App {
-    display: flex;
-    height: calc(100vh - 90px);
-    background-color: $greyDark;
-}
 
-.navBar {
-    display: flex;
-    flex-direction: column;
-    width: 232px;
-    min-width: 232px;
-    height: 100%;
-    padding: 10px;
-    background: $black;
-    font-size: 0.9rem;
-    font-weight: 600;
-    .logo {
-        padding: 1.1rem 0.8rem;
-        svg {
-            max-width: 130px;
-            path {
-                fill: $white;
-            }
-        }
-    }
-    ul {
-        a {
-            text-decoration: none;
-            li {
-                color: $greyText;
-                list-style: none;
-                border-radius: 5px;
-                padding: 0.6rem 1.1rem;
-                // font-size: 0.9rem;
-                // font-weight: 600;
-                cursor: pointer;
-                transition: all 0.3 ease ease-in-out;
-                &:last-child {
-                    margin-top: auto;
-                }
-                &.active {
-                    background: $greyLight;
-                    color: $white;
-                }
-                &:hover {
-                    color: $white;
-                }
-            }
-            svg {
-                margin-right: 1.1rem;
-                transform: scale(1.5);
-            }
-        }
-    }
-    a {
-        text-decoration: none;
-        margin-top: auto;
-        .contact {
-            font-size: 0.9rem;
-            padding: 0.6rem 1.1rem;
-            color: $greyText;
-            &:hover {
-                color: $white;
-            }
-            svg {
-                margin-right: 1.1rem;
-                transform: scale(1.5);
-            }
-        }
-    }
-}
-
-.outerWrap {
+.outer-wrap {
     background: grey;
     height: 100vh;
     min-height: 100vh;
-}
-
-.musicControls {
-    height: 90px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    z-index: 2;
-    border-top: 1px solid $black;
-    background: $greyLight;
-    color: $white;
-}
-
-.upperNav {
-    display: flex;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    height: 60px;
-    width: 100%;
-    padding: 1.8rem 1rem;
-    background: rgba(9, 9, 9, 0.84);
-    color: white;
-}
-
-.main {
-    width: 100%;
-    position: relative;
-    overflow-y: scroll;
-    padding-top: 3.5rem;
-    color: white;
-}
-
-.cardWrap {
-    width: 18%;
-    margin-right: 1.5%;
-    min-width: 15%;
-    .card {
-        width: 100%;
-        padding: 1.2rem;
-        margin: auto 0;
-        border-radius: 10px;
-        overflow: hidden;
-        background: $greyLight;
-        .cardImage {
-            height: 140px;
-            width: 140px;
-            img {
+    .App {
+        display: flex;
+        height: calc(100vh - 90px);
+        background-color: $greyDark;
+        .main {
+            width: 100%;
+            position: relative;
+            overflow-y: scroll;
+            padding-top: 3.5rem;
+            color: white;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE 10+ */
+            &::-webkit-scrollbar {
+                width: 0px;
+                background: transparent; /* Chrome/Safari/Webkit */
+            }
+            .main-content {
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
-            }
-        }
-        .cardContent {
-            padding: 1.2rem 0;
-            h3 {
-                font-size: 0.9rem;
-                font-weight: 600;
             }
         }
     }
 }
-//! type beat page
-.beatsWraper {
-    padding: 1.2rem 2rem;
-    h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-    }
-    .beatsCardWraper {
-        display: flex;
-        // justify-content: space-between;
-        flex-wrap: wrap;
-        padding: 1.2rem 0;
-        a {
-            width: 18%;
 
-            margin-right: 1.5%;
-            text-decoration: none;
-            color: $white;
-            .cardWrap {
-                width: 100%;
-                min-width: 15%;
-                .card {
-                    width: 100%;
-                    padding: 1.2rem;
-                    margin: auto 0;
-                    border-radius: 10px;
-                    overflow: hidden;
-                    background: $greyLight;
-                    .cardImage {
-                        height: 140px;
-                        width: 140px;
-                        img {
-                            width: 100%;
-                            height: 100%;
-                            object-fit: cover;
-                        }
-                    }
-                    .cardContent {
-                        padding: 1.2rem 0;
-                        h3 {
-                            font-size: 0.9rem;
-                            font-weight: 600;
-                        }
-                        p {
-                            margin-top: 1rem;
-                            font-size: 0.7rem;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-//! Register , Login , Upload page
-.inputDiv {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 450px;
-    padding: 0 50px;
-    margin: 0 auto;
-    h2 {
-        margin: 1rem 0;
-    }
-    form {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        input {
-            margin-top: 1rem;
-            border: none;
-            border-bottom: 1px solid $greyLight;
-            background: none;
-            color: $white;
-            font-size: 0.9rem;
-            &::placeholder {
-                color: $greyText;
-            }
-            &:focus {
-                outline: none;
-                caret-color: $white;
-                border-bottom: 1px solid $white;
-                color: $white;
-                &::placeholder {
-                    color: $white;
-                }
-            }
-        }
-        select {
-            margin-top: 1rem;
-            background: none;
-            font-size: 0.9rem;
-            border: none;
-            border-bottom: 1px solid $greyLight;
-            color: $greyText;
-            // text-indent: -3px;
-            &:focus {
-                outline: none;
-            }
-        }
-        button {
-            margin-top: 2rem;
-            padding: 0.5rem 0;
-            border: none;
-            outline: none;
-            background: $white;
-            color: $black;
-            font-size: 0.9rem;
-            font-weight: 600;
-            &:hover {
-                transform: scale(0.97);
-                background: $greyText;
-            }
-            &:active {
-                transform: scale(0.97);
-            }
-        }
-    }
-}
-//! Playlist , Artist page
-.mainContainerPlaylist {
-    width: 90%;
-    margin: 0 auto;
-    .playlistHead {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        margin-bottom: 1rem;
-        color: $greyText;
-        span {
-            width: 5%;
-            text-align: center;
-            visibility: hidden;
-        }
-        p {
-            width: 30%;
-            &:nth-child(5),
-            &:nth-child(6),
-            &:nth-child(7) {
-                width: 10%;
-            }
-        }
-    }
-    .playlistList {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        height: 40px;
-        border-bottom: 1px solid $greyLight;
-        vertical-align: middle;
-        span {
-            width: 5%;
-            text-align: center;
-            visibility: hidden;
-        }
-        &:hover {
-            span {
-                visibility: visible;
-                vertical-align: middle;
-                background: $greyLight;
-            }
-            p {
-                background: $greyLight;
-            }
-        }
-        p {
-            vertical-align: middle;
-            width: 30%;
-            &:nth-child(5),
-            &:nth-child(6) {
-                width: 10%;
-            }
-            &:nth-child(7) {
-                width: 5%;
-            }
-            a {
-                color: $white;
-                &:visited {
-                    text-decoration: none;
-                }
-            }
-        }
-    }
 
-    // .playlistContainer {
-    //   table {
-    //     border-collapse: collapse;
-    //     thead {
-    //       tr {
-    //         margin-bottom: rem;;
 
-    //         font-size: 0.8rem;
-    //         color: $greyText
-    //       }
-    //       margin-bottom: 2rem;
-    //     }
-    //     tbody {
-    //       vertical-align: text-top;
-    //       border-spacing: 0 1rem;
-    //       tr {
-    //         border-bottom: 1px solid $greyLight;
-    //         height: 50px;
-    //         vertical-align: text-top;
-    //         &:hover {
-    //           background: $greyLight;
-    //           span {
-    //             visibility: visible;
-    //             path {
-    //               fill: $white;
-    //             }
-    //           }
-    //         }
-    //         td {
-    //           vertical-align: middle;
-    //           color: $white;
-    //           text-decoration: none;
-    //           a:visited{
-    //             text-decoration: none;
-    //             td {
-    //               vertical-align: text-bottom;
-    //             }
-
-    //           }
-    //           span {
-    //             visibility: hidden;
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-}
