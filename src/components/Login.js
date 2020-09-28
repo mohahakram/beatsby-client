@@ -1,56 +1,97 @@
-import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
-import { useState } from 'react'
-import APIHandler from '../config/api/APIHandler'
-import { useContext } from 'react'
-import UserContext from '../config/auth/UserContext'
-import CountContext from '../config/auth/CountContext'
-import CheckDate from '../config/auth/CheckDate'
-// import CheckDate from '../config/auth/CheckDate'
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 
-//TODO redirect if user already logged in 
+import "../css/input.scss";
+
+import APIHandler from "../config/api/APIHandler";
+import UserContext from "../config/auth/UserContext";
+import AuthContext from "../config/auth/AuthContext";
+import { SetWithExpiry } from "../config/auth/LocalStorageSetup";
+
+//TODO redirect if user already logged in
 
 const Login = (props) => {
-    const [ currentUser, setCurrentUser ] = useContext(UserContext);
-    const CheckUser = async () => {
-    await currentUser.hasOwnProperty('id') && props.history.push('/main');
-        CheckUser();
-    }
-    
-    const [ user, setUser ] = useState();
-    
-    const handleOnChange = async e => {
-        setUser( { ...user, [e.target.name]: e.target.value } )
-        // console.log(user)
-    }
-    
-    // const check = await CheckDate();
+    // const CheckUser = async () => {
+    //     await currentUser.user && props.history.push('/main');
+    //     CheckUser();
+    // }
 
-    const handleOnSubmit = async e => {
-        
-        e.preventDefault()
+    const [currentUser, setCurrentUser] = useContext(UserContext);
+    const [isAuthorized, setIsAuthorized] = useContext(AuthContext);
+
+    const [serverResponse, setServerResponse] = useState();
+    const [error, setError] = useState();
+    const [user, setUser] = useState();
+
+    // listen to input change and add value to string
+    const handleOnChange = async (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value });
+    };
+
+    const handleOnSubmit = async (e) => {
+        // prevent page from refreshinf after submitting form
+        e.preventDefault();
         try {
-            // console.log(user)
-            await APIHandler.post('/session/login', user)
-            .then( res => setCurrentUser(res.data));
-            console.log('tout ok');
-            props.history.push('/main')
+            await APIHandler.post("/session/login", user).then((res) => {
+                setServerResponse(res.data);
+                //authorization
+                setIsAuthorized(true);
+                // set user to Usercontext
+                setCurrentUser({
+                    id: res.data.id,
+                    userName: res.data.userName,
+                });
+                // set user to local memory
+                SetWithExpiry(
+                    "user_auth",
+                    { id: res.data.id, userName: res.data.userName },
+                    300000000
+                );
+            });
+            // if no error redirect user to home page
+            props.history.push("/home");
+            // else store error and later show it to user
         } catch (err) {
-            console.log(err);
+            setError(err.response.data.msg);
         }
-    }
-    console.log(currentUser);
+    };
 
-    return(
-        <div className="inputDiv">
-            <h2>Login</h2>
-            <form onChange={handleOnChange} onSubmit={handleOnSubmit} >
-                <input type="text" name="email" placeholder="Email" required autoComplete="off"/>
-                <input type="password" name="password" placeholder="Password" required autoComplete="off"/>
-                <button >Login</button>
-            </form>
+    return (
+        <div className="input-main-content">
+            <div className="input-div">
+                <h2>Login</h2>
+                <form onChange={handleOnChange} onSubmit={handleOnSubmit}>
+                    <input
+                        type="text"
+                        name="email"
+                        placeholder="E-mail"
+                        required
+                        autoComplete="off"
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        required
+                        autoComplete="off"
+                    />
+                    <button>Log in</button>
+                </form>
+                {/* if login error show error */}
+                {error && (
+                    <div className="error">
+                        <p>{error}</p>
+                    </div>
+                )}
+                <div className="fallback">
+                    <p>
+                        Don't have an account?{" "}
+                        <Link to="/register">Register</Link>
+                    </p>
+                </div>
+            </div>
         </div>
-    )
-}
+    );
+};
 
 export default Login;
