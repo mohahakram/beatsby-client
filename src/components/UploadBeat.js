@@ -1,12 +1,10 @@
-import React from 'react';
-import {useState} from 'react'
-import APIHandler from '../config/api/APIHandler'
-import Axios from 'axios';
+import React, { useState, useContext } from "react";
+import APIHandler from "../config/api/APIHandler";
 
+import UserContext from "../config/auth/UserContext";
 
-
-const UploadBeat = (props) => {
-
+const UploadBeat = () => {
+    const [currentUser, setCurrentUser] = useContext(UserContext);
 
     const [title, setTitle] = useState();
     const [artist, setArtist] = useState();
@@ -16,43 +14,63 @@ const UploadBeat = (props) => {
     const [contract, setContract] = useState("lease");
     const [price, setPrice] = useState();
 
-    const [audioFile, setFile] = useState()
-    
-    const handleOnChange = async e => {
-        // e.target.type==="text" ? setDetails( e.target.value  ) :
-        // setFile(  e.target.files[0]  )
-        // console.log(details)
+    const [audioFile, setAudioFile] = useState();
+    //TODO add cover image
+    const [coverImage, setCoverImage] = useState();
 
-        if (e.target.type === "text"){
-            if (e.target.name === "title"){
-                setTitle(e.target.value)
-            } else if (e.target.name === "artist"){
-                setArtist(e.target.value)
-            } else if (e.target.name === "featureArtist"){
-                setFeatureArtist(e.target.value)
-            } else if (e.target.name === "bpm"){
-                setBpm(e.target.value)
+    const handleOnChange = async (e) => {
+        // check type and name and set value to right variable
+        if (e.target.type === "text") {
+            if (e.target.name === "title") {
+                setTitle(e.target.value);
+            } else if (e.target.name === "artist") {
+                setArtist(e.target.value);
+            } else if (e.target.name === "featureArtist") {
+                setFeatureArtist(e.target.value);
+            } else if (e.target.name === "bpm") {
+                setBpm(e.target.value);
             } else {
-                setPrice(e.target.value)
+                setPrice(e.target.value);
             }
-        }   else if (e.target.name === "audioFile") {
-            setFile(e.target.files[0])
+        } else if (e.target.type === "file") {
+            if (e.target.name === "audioFile") {
+                setAudioFile(e.target.files[0]);
+            } //else {
+            //     setCoverImage(e.target.files[0])
+            // }
         }
-    }
+        // pass chosen cover image to preview function
+        previewFile(coverImage);
+    };
 
-    const typeChange = async e => {
+    const [previewSource, setPreviewSource] = useState();
+    // set cover image as readable image to preview it
+    const previewFile = (file) => {
+        if (file) {
+            console.log(file);
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = () => {
+                setPreviewSource(reader.result);
+            };
+        }
+    };
+
+    const typeChange = async (e) => {
         setType(e.target.value);
-    }
+    };
 
-    const contractChange = async e => {
+    const contractChange = async (e) => {
         setContract(e.target.value);
-    }
-    // console.log(contract);
-    const handleOnSubmit = async e => {
-        
-        e.preventDefault()
+    };
+
+    // on submit append property and its value to the form object
+    const handleOnSubmit = async (e) => {
+        // prevent refreshing the page on submit
+        e.preventDefault();
 
         const data = new FormData();
+        data.append("userId", currentUser.id);
         data.append("title", title);
         data.append("artist", artist);
         data.append("featureArtist", featureArtist);
@@ -61,61 +79,98 @@ const UploadBeat = (props) => {
         data.append("contract", contract);
         data.append("price", price);
         data.append("audioFile", audioFile);
+        //TODO add cover image input
+        // data.append("coverImage", coverImage);
 
         try {
-            // console.log(details)
-            await APIHandler.post('/beats/upload', data)
-                .then(res => console.log(res))
-                .catch(err => console.log(err));
-            console.log('access granted');
+            await APIHandler.post("/beat/upload", data)
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err));
             // props.history.push('/main')
         } catch (err) {
             console.log(err);
         }
-        // console.log(data);
-        // Axios.post('http://localhost:4001/beats/upload', data).then( res => console.log(res)).catch(err => console.log(err));
-    }
+    };
 
-    return(
-        <div className="inputDiv">
-            <h2>Upload beat</h2>
-            <form action="/beats/upload" onChange={handleOnChange} onSubmit={handleOnSubmit}>
-                <input type="text" name="title" placeholder="Title" required autoComplete="off"/>
-                {/* <label htmlFor="title"><span>Title</span></label> */}
-                
-                <input type="text" name="artist" placeholder="Artist" required autoComplete="off"/>
-                {/* <label htmlFor="artist"><span>Artist</span></label> */}
-                
-                <input type="text" name="featureArtist" placeholder="Feature artist" autoComplete="off"/>
-                {/* <label htmlFor="featurArtist"><span>Feature artist</span></label> */}
-                
-                <input type="text" name="bpm" placeholder="BPM" required autoComplete="off"/>
-                {/* <label htmlFor="bpm"><span>BPM</span></label> */}
+    return (
+        <div className="input-main-content">
+            <div className="input-div">
+                <h2>Ready to share your work?</h2>
+                <form
+                    action="/beats/upload"
+                    onChange={handleOnChange}
+                    onSubmit={handleOnSubmit}
+                >
+                    <input
+                        type="text"
+                        name="title"
+                        placeholder="Title"
+                        required
+                        autoComplete="off"
+                    />
 
-                <select onChange={typeChange}>
-                    <option value="Trap">Trap</option>
-                    <option value="Hip Hop">Hip Hop</option>
-                    <option value="RnB">RnB</option>
-                    <option value="Soul">Soul</option>
-                    <option value="Electro">Electro</option>
-                    <option value="Jazzy">Jazzy</option>
-                </select>
-                
-                <select onChange={contractChange}>
-                    <option name="lease" value="lease">Lease</option>
-                    <option name="exclusive" value="exclusive">Exclusive</option>
-                </select>
-                
-                <input type="text" name="price" placeholder="Price 0.00" required autoComplete="off"/>
+                    <input
+                        type="text"
+                        name="artist"
+                        placeholder="Artist"
+                        required
+                        autoComplete="off"
+                    />
 
-                <input type="file" name="audioFile" accept=".wav"/>
-                
-                <button>Upload</button>
-            </form>
-            
+                    <input
+                        type="text"
+                        name="featureArtist"
+                        placeholder="Feature artist"
+                        autoComplete="off"
+                    />
+
+                    <input
+                        type="text"
+                        name="bpm"
+                        placeholder="BPM"
+                        required
+                        autoComplete="off"
+                    />
+
+                    <select onChange={typeChange}>
+                        <option value="trap">Trap</option>
+                        <option value="hip hop">Hip Hop</option>
+                        <option value="rnb">RnB</option>
+                        <option value="afro">Afro</option>
+                        <option value="soul">Soul</option>
+                        <option value="Electro">Electro</option>
+                        <option value="jazzy">Jazzy</option>
+                    </select>
+
+                    <select onChange={contractChange}>
+                        <option name="lease" value="lease">
+                            Lease
+                        </option>
+                        <option name="exclusive" value="exclusive">
+                            Exclusive
+                        </option>
+                    </select>
+
+                    <input
+                        type="text"
+                        name="price"
+                        placeholder="Price 0.00"
+                        required
+                        autoComplete="off"
+                    />
+
+                    <input type="file" name="audioFile" accept=".wav" />
+                    {/* //TODO add cover image */}
+                    {/* <input type="file" name="coverImg" accept=".jpg, .jpeg"/> */}
+
+                    {/* {previewSource && (
+                        <img src={previewSource} style={{height: '300px'}} /> 
+                    )} */}
+                    <button>Upload</button>
+                </form>
+            </div>
         </div>
-    )
-}
-
+    );
+};
 
 export default UploadBeat;
