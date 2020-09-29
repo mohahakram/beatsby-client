@@ -1,12 +1,15 @@
 import axios from "axios";
 
+
 class APIHandler {
   constructor() {
+    let backend_uri = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_BACKEND_URL : "http://localhost:4001" ;
+    console.log(backend_uri);
     this.name = "APIHandler";
-    if (!process.env.REACT_APP_BACKEND_URL)
+    if (!backend_uri)
       throw new Error("A target backend URL must be specified in .env");
     this.api = axios.create({
-      baseURL: `${process.env.REACT_APP_BACKEND_URL}`,
+      baseURL: `${backend_uri}`,
       // withCredentials: infos && infos.credentials ? true : false
       withCredentials: true
     });
