@@ -4,14 +4,21 @@ import axios from "axios";
 class APIHandler {
   constructor() {
     let backend_uri = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_BACKEND_URL : "http://localhost:4001" ;
-    console.log(backend_uri);
+    let auth = localStorage.getItem("user_auth");
+    let token = JSON.parse(auth);
+    console.log(token);
+
+
     this.name = "APIHandler";
     if (!backend_uri)
       throw new Error("A target backend URL must be specified in .env");
     this.api = axios.create({
       baseURL: `${backend_uri}`,
       // withCredentials: infos && infos.credentials ? true : false
-      withCredentials: true
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer" + " " + token.user.jwt
+      }
     });
     // this.api.interceptors.response.use(function (response) {
     //   // Any status code that lie within the range of 2xx cause this function to trigger
