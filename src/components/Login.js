@@ -44,7 +44,7 @@ const Login = (props) => {
                 // set user to local memory
                 SetWithExpiry(
                     "user_auth",
-                    { id: res.data.id, userName: res.data.userName },
+                    { id: res.data.id, userName: res.data.userName, jwt: res.data.jwt },
                     300000000
                 );
             });
