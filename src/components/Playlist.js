@@ -25,7 +25,7 @@ const Playlist = (props) => {
             await APIHandler.get("/favourite")
                 .then(
                     async (res) =>
-                        res.status === 200 && (await setFavourite(res.data))
+                        res.status === 200 && await setFavourite(res.data)
                 )
                 .then(setIsLoading(false));
         } catch (err) {
@@ -38,7 +38,7 @@ const Playlist = (props) => {
             await APIHandler.get("/cart")
                 .then(
                     async (res) =>
-                        res.status === 200 && (await setCart(res.data))
+                        res.status === 200 && await setCart(res.data)
                 )
                 .then(setIsLoading(false));
         } catch (err) {
@@ -51,21 +51,18 @@ const Playlist = (props) => {
             try {
                 setIsLoading(true);
                 await APIHandler.get(`/playlist/${props.match.params.id}`)
-                    .then(async (res) => {await setPalylist(res.data); console.log(res)})
+                    .then(async (res) => await setPalylist(res.data))
                     .then(fetchFavourites())
                     .then(fetchCart())
                     .then(setRefresh(false))
                     
                 // setIsLoading(false);
-                // console.log(done);
             } catch (err) {
                 console.log(err);
             }
         };
         data();
     }, [refresh]);
-    console.log("cart:", cart);
-    console.log("fav:", favourite);
 
     // set clicked beat as current beat 
     // and use it in different components
@@ -88,7 +85,7 @@ const Playlist = (props) => {
             await APIHandler.post(`/favourite/add/${id}`).then((res) => {
                 // refresh changed part so the user 
                 //can see it has been added 
-                res.status === 200 && setRefresh(true);
+                 return res.status === 200 && setRefresh(true)
             });
         } catch (err) {
             console.log(err);
@@ -110,7 +107,7 @@ const Playlist = (props) => {
     const handleOnClickAddToCart = async (id) => {
         try {
             await APIHandler.post(`/cart/add/${id}`).then((res) => {
-                res.status === 200 && setRefresh(true);
+                return res.status === 200 && setRefresh(true)
             });
             console.log("ok");
         } catch (err) {
