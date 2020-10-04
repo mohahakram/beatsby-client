@@ -13,7 +13,7 @@ const Home = () => {
             />
             <div className="home-text">
                 <div className="text-center">
-                    <h1>Thousands of high quality beats wating for you</h1>
+                    <h1>Thousands of high quality beats waiting for you</h1>
                     <div className="search-link">
                         <h2>Looking for a beat for your project?</h2>
                         <p>
