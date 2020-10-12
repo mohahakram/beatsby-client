@@ -101,6 +101,7 @@ const PlaylistComponent = (props) => {
                                             className="play-button"
                                             onClick={() => {
                                                 props.onClickSetCurrentBeat(data)
+                                                props.onClickSetCurrentPlaylist()
                                                 const play = isPlaying ? (setIsPaused(true),setIsPlaying(true) ):
                                                 setIsPlaying(true)
                                                 // props.onClickPlay(data);
@@ -143,7 +144,7 @@ const PlaylistComponent = (props) => {
                                     // then set class with diffent to show if the beat has beat liked
                                     props.favouritesList ? 
                                         props.favouritesList.some(
-                                            (id) => id === data._id
+                                            (beat) => beat._id === data._id
                                         ) ?
                                             <span className="is-favourite"
                                                 onClick={(e) => {
