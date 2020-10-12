@@ -14,8 +14,11 @@ const MusicPlayer = (props) => {
     const [isPlaying, setIsPlaying] = useContext(PlayingContext);
     const [isPaused, setIsPaused] = useContext(PausedContext);
 
+    // if running in prod use live domain otherwise localehost
+    const domain = process.env.NODE_ENV === 'production' ? 'https://beatsby.herokuapp.com/play/' : 'http://localhost:4001/play/' ;
+
     // get stream from backend with filename
-    const source = currentBeat && 'http://localhost:4001/play/' + currentBeat.audioFile.fileName;
+    const source = currentBeat && domain + currentBeat.audioFile.fileName;
 
     useEffect( () => {
 
