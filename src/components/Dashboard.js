@@ -31,7 +31,7 @@ const Dashboard = () => {
             setUploadedBeats(res.data.beats);
             setFavourites(res.data.favourites);
             //total items in cart
-            setCartTotalItems(res.data.cart[0].cartList.length);
+            return res.data.cart[0]?.cartList ? setCartTotalItems(res.data.cart[0].cartList.length) : null;
         });
     }, []);
 
@@ -122,12 +122,16 @@ const Dashboard = () => {
                 <div>
                     {/* if show beats is set to true then show content */}
                     {showBeats ? (
-                        <div className="playlist">
-                            <PlaylistComponent
-                                beatDetails={uploadedBeats}
-                                favouritesList={favourites}
-                            />
-                        </div>
+                        uploadedBeats.length > 0 ? 
+                            <div className="playlist">
+                                <PlaylistComponent
+                                    beatDetails={uploadedBeats}
+                                    favouritesList={favourites}
+                                />
+                            </div> : 
+                            <div className="playlist">
+                                <p className="empty">No uploaded beat</p>
+                            </div>
                     ) : null}
                 </div>
 
@@ -145,12 +149,16 @@ const Dashboard = () => {
                 <div>
                     {/* if show favourites is set to true then show content */}
                     {showFavourites ? (
-                        <div className="playlist">
-                            <PlaylistComponent
-                                beatDetails={uploadedBeats}
-                                favouritesList={favourites}
-                            />
-                        </div>
+                        favourites.length > 0 ?
+                            <div className="playlist">
+                                <PlaylistComponent
+                                    beatDetails={uploadedBeats}
+                                    favouritesList={favourites}
+                                />
+                            </div> :
+                            <div className="playlist">
+                                <p className="empty">No favourites</p>
+                            </div>
                     ) : null}
                 </div>
             </div>
