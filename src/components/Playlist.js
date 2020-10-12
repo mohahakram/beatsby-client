@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 
 import APIHandler from "../config/api/APIHandler";
 import BeatContext from "../config/context/BeatContext";
+import PlaylistContext from "../config/context/PlaylistContext";
 import PlayingContext from "../config/context/PlayingContext";
 import PauseContext from "../config/context/PlayingContext";
 
@@ -10,6 +11,7 @@ import PlaylistComponent from "../components/PlaylistComponent";
 
 const Playlist = (props) => {
     const [currentBeat, setCurrentBeat] = useContext(BeatContext);
+    const [currentPlaylist, setCurrentPlaylist] = useContext(PlaylistContext);
     const [isPlaying, setIsPlaying] = useContext(PlayingContext);
     const [isPaused, setIsPaused] = useContext(PauseContext);
     const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +47,7 @@ const Playlist = (props) => {
             console.log(err);
         }
     };
-    
+
     useEffect(() => {
         const data = async () => {
             try {
@@ -70,6 +72,10 @@ const Playlist = (props) => {
         setCurrentBeat(data);
     };
 
+    const handleOnClickSetCurrentPlaylist = () => {
+        setCurrentPlaylist(playlist)
+    }
+
     // function passed as prop 
     const handleOnClickIsPlaying = () => {
         setIsPlaying(true);
@@ -85,7 +91,7 @@ const Playlist = (props) => {
             await APIHandler.post(`/favourite/add/${id}`).then((res) => {
                 // refresh changed part so the user 
                 //can see it has been added 
-                 return res.status === 200 && setRefresh(true)
+                return res.status === 200 && setRefresh(true)
             });
         } catch (err) {
             console.log(err);
@@ -138,10 +144,11 @@ const Playlist = (props) => {
                     < PlaylistComponent beatDetails = {playlist}
                                         currentBeat={currentBeat}
                                         isPlaying={isPlaying}
-                                        onClickIsPlaying={handleOnClickIsPlaying}
-                                        onClickIsPaused={handleOnClickIsPaused}
                                         favouritesList={favourite.favouriteList}
                                         cartList={cart.cartList}
+                                        onClickIsPlaying={handleOnClickIsPlaying}
+                                        onClickIsPaused={handleOnClickIsPaused}
+                                        onClickSetCurrentPlaylist={handleOnClickSetCurrentPlaylist}
                                         onClickAddFavourite={handleOnClickAddFavourite}
                                         onClickDeleteFavourite={handleOnClickDeleteFavourite}
                                         onClickAddToCart={handleOnClickAddToCart}
