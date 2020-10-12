@@ -8,11 +8,6 @@ import PausedContext from "../config/context/PlayingContext";
 import PlaylistComponent from "../components/PlaylistComponent"
 import MusicControls from "../components/MusicControls"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
-import { faPauseCircle } from "@fortawesome/free-solid-svg-icons";
-import { faStepForward } from "@fortawesome/free-solid-svg-icons";
-import { faStepBackward } from "@fortawesome/free-solid-svg-icons";
 
 const MusicPlayer = (props) => {
     const [currentBeat, setCurrentBeat] = useContext(BeatContext);
@@ -73,30 +68,7 @@ const MusicPlayer = (props) => {
 
     return (
         <div>
-            {/* { 
-            props.beatDetails ? 
-            < PlaylistComponent beatDetails = {props.beatDetails}
-                                onClickPlay = {onClickHandlePlay}
-                                onClickPause = {onClickHandlePause}
-                                currentBeat = {currentBeat}
-                                isPlaying = {isPlaying}
-                                onClickSetCurrentBeat={onClickHandleSetCurrentBeat}
-                                onClickAddFavourite={props.onClickAddFavourite} 
-                                favouritesList={props.favouritesList}
-                                onClickAddToCart={props.onClickAddToCart} />
-            :
-            null
-            } */}
 
-            {/* <div className="play-button" onClick={onClickHandlePlay}>
-                <FontAwesomeIcon
-                    icon={!isPlaying ? faPlayCircle : faPauseCircle}
-                    fixedWidth
-                />
-            </div> */}
-            {/* < MusicControls onClickPlay={onClickHandlePlay}
-                            onClickPause={onClickHandlePause}
-                            isPlaying={isPlaying}/> */}
         </div>
     );
 };
