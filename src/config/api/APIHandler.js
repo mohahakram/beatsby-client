@@ -6,8 +6,7 @@ class APIHandler {
     let backend_uri = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_BACKEND_URL : "http://localhost:4001" ;
     let auth = localStorage.getItem("user_auth");
     let token = JSON.parse(auth);
-    console.log(token);
-
+    let jwt = token?.user?.jwt ? "Bearer" + " " + token.user.jwt : null;
 
     this.name = "APIHandler";
     if (!backend_uri)
@@ -17,7 +16,7 @@ class APIHandler {
       // withCredentials: infos && infos.credentials ? true : false
       withCredentials: true,
       headers: {
-        Authorization: "Bearer" + " " + token.user.jwt
+        Authorization: jwt
       }
     });
     // this.api.interceptors.response.use(function (response) {
