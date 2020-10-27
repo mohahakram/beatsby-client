@@ -9,7 +9,6 @@ export const SetWithExpiry = (key, value, ttl) => {
         user: value,
         expires: now.getTime() + ttl,
     };
-    console.log(value);
     localStorage.setItem(key, JSON.stringify(item));
 };
 
@@ -18,7 +17,6 @@ export const GetWithExpiry = (key) => {
     const itemStr = localStorage.getItem(key);
     // if the item doesn't exist, return null
     if (!itemStr) {
-        console.log(('not'));
         return null;
     } else {
         const item = JSON.parse(itemStr);
@@ -30,7 +28,6 @@ export const GetWithExpiry = (key) => {
             localStorage.removeItem(key);
             return null
         }
-        console.log(item)
         return item
     }   
 };
