@@ -15,7 +15,7 @@ const Playlist = (props) => {
     const [isPlaying, setIsPlaying] = useContext(PlayingContext);
     const [isPaused, setIsPaused] = useContext(PauseContext);
     const [isLoading, setIsLoading] = useState(false);
-    const [playlist, setPalylist] = useState([]);
+    const [playlist, setPlaylist] = useState([]);
     const [favourite, setFavourite] = useState([]);
     const [cart, setCart] = useState([]);
     const [refresh, setRefresh] = useState(false);
@@ -53,7 +53,7 @@ const Playlist = (props) => {
             try {
                 setIsLoading(true);
                 await APIHandler.get(`/playlist/${props.match.params.id}`)
-                    .then(async (res) => await setPalylist(res.data))
+                    .then(async (res) => await setPlaylist(res.data))
                     .then(fetchFavourites())
                     .then(fetchCart())
                     .then(setRefresh(false))
@@ -127,7 +127,6 @@ const Playlist = (props) => {
                 res.status === 200 && setRefresh(true);
                 ;
             });
-            console.log("ok");
         } catch (err) {
             console.log(err);
         }
@@ -135,13 +134,13 @@ const Playlist = (props) => {
 
     return (
         <div className="playlist">
-            
             {/* check if playlist and faourites variables 
                 contain items before rendering */}
             {pl && fr ? (
                 // fragment syntax
                 <>
-                    < PlaylistComponent beatDetails = {playlist}
+                    < PlaylistComponent url = {props.match.params.id}
+                                        beatDetails = {playlist}
                                         currentBeat={currentBeat}
                                         isPlaying={isPlaying}
                                         favouritesList={favourite.favouriteList}
@@ -157,7 +156,14 @@ const Playlist = (props) => {
                     />
                     < MusicPlayer />
                 </>
-            ) : null}
+            ) : 
+            (
+            <div className="empty-playlist">
+                <p>No beats in this playlist yet</p>
+            </div>
+            
+            )
+            }
         </div>
     );
 };
