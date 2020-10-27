@@ -65,6 +65,34 @@
             }
         }
     }
+    .button-controls-disabled {
+        width: 8rem;
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        left:0;
+        right:0;
+        margin-left:auto;
+        margin-right:auto;
+        color: $greyText;
+        pointer-events: none;
+        .previous-button,
+        .next-button {
+            transform: scale(1.1);
+            &:hover {
+                // transform: scaleX(1.7);
+                transform: scale(1.3);
+            }
+        }
+        .play-button,
+        .play-button-disabled,
+        .pause-button {
+            transform: scale(2);
+            &:hover {
+                transform: scale(2.2);
+            }
+        }
+    }
     .volume-control {
         input[type=range] {
             height: 25px;
@@ -202,6 +230,32 @@
             }
         } 
         .button-controls {
+            width: 8rem;
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            left:0;
+            right:0;
+            margin-left:auto;
+            margin-right:auto;
+            .previous-button,
+            .next-button {
+                transform: scale(1.1);
+                &:hover {
+                    // transform: scaleX(1.7);
+                    transform: scale(1.3);
+                }
+            }
+            .play-button,
+            .play-button-disabled,
+            .pause-button {
+                transform: scale(2);
+                &:hover {
+                    transform: scale(2.2);
+                }
+            }
+        }
+        .button-controls-disabled {
             width: 8rem;
             display: flex;
             justify-content: space-between;
