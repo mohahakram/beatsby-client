@@ -51,7 +51,8 @@ const MusicControls =  (props) => {
 
     const handleVolumeChange = (event) => {
         setVolume((parseInt(event.target.value) / 100 ))
-        Howler.volume(volume)
+        // Howler.volume(volume)
+        // sound.volume(parseInt(event.target.value) / 100 )
     }
 
     return(
@@ -87,22 +88,16 @@ const MusicControls =  (props) => {
                     </div>
                 </div>
             )}
-            <div className="button-controls">
+            <div className={ currentBeat ? "button-controls" : "button-controls-disabled"}>
                 <div className="previous-button" onClick={(e) => {
                     e.preventDefault()
                     handleOnPrevious()} }><FontAwesomeIcon icon={faStepBackward} fixedWidth />
                 </div>
                 { !isPlaying ?
-                    currentBeat ? 
-                        <div className="play-button" onClick={handleOnClickIsPlaying}>
-                            <FontAwesomeIcon icon={faPlayCircle} fixedWidth />
-                        </div>
-                        :
-                        <div className="play-button-disabled">
-                            <FontAwesomeIcon icon={faPlayCircle} fixedWidth />
-                        </div>
+                    <div className="play-button" onClick={handleOnClickIsPlaying}>
+                        <FontAwesomeIcon icon={faPlayCircle} fixedWidth />
+                    </div>
                     : 
-                    
                     <div className="pause-button" onClick={handleOnClickIsPaused}>
                         <FontAwesomeIcon icon={faPauseCircle} fixedWidth />
                     </div>
@@ -116,7 +111,7 @@ const MusicControls =  (props) => {
                 <input type="range" min="0" max="100"  value={volume * 100} onChange={handleVolumeChange}/>
             </div>
             <div className="music-player">
-                < MusicPlayer />
+                < MusicPlayer volume={volume}/>
             </div>
         </div>
     )
