@@ -11,6 +11,7 @@ import { faPlay, faPause, faHeart,faCartArrowDown, faTimes, faEllipsisV } from "
 
 const PlaylistComponent = (props) => {
     let { pathname } = useLocation();
+    let url = props.url;
     const [isPlaying, setIsPlaying] = useContext(PlayingContext);
     const [isPaused, setIsPaused] = useContext(PauseContext);
     const { artist, type } = props.beatDetails[0];
@@ -26,6 +27,7 @@ const PlaylistComponent = (props) => {
     const electroImage = "https://images.unsplash.com/photo-1562369083-e501b585fd2c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2863&q=80"
     const exclusiveImage = "https://images.unsplash.com/photo-1548691905-57c36cc8d935?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2849&q=80"
     const leaseImage = "https://images.unsplash.com/photo-1596396289005-96863abfebbc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
+    const coverImg = "https://images.unsplash.com/photo-1516981442399-a91139e20ff8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80"
     
     useEffect(() => {
         const img = pathname === "/playlist/hip-hop" ? setSource(hhImage) 
@@ -37,7 +39,7 @@ const PlaylistComponent = (props) => {
         : pathname === "/playlist/electro" ? setSource(electroImage)
         : pathname === "/playlist/exclusive" ? setSource(exclusiveImage)
         : pathname === "/playlist/lease" ? setSource(leaseImage)
-        : null
+        : pathname.includes("/artist/") ? setSource(coverImg) : null
         
     }, [])
     // ! replace from database
@@ -56,10 +58,11 @@ const PlaylistComponent = (props) => {
                     {pathname.includes("/playlist") ? (
                         <div className="playlist-details">
                             <p>Playlist</p>
-                            <h2>{type}</h2>
+                            <h2>{url}</h2>
                         </div>
                     ) : (
                         <div className="playlist-details">
+                            <p>Artist</p>
                             <h2>{artist}</h2>
                         </div>
                     )}
