@@ -49,7 +49,7 @@
             }
         }
         button {
-            margin-top: 2rem;
+            margin: 2rem 0 1rem 0;
             padding: 0.5rem 0;
             border: none;
             border-radius: unset;
@@ -69,11 +69,9 @@
         }
     }
     .error {
-        margin-top: 1rem;
         color: $redLight;
     }
     .fallback {
-        margin-top: 1rem;
         a:visited {
             text-decoration: none;
             color: $white;
@@ -134,7 +132,7 @@
                     }
                 }
                 button {
-                    margin-top: 2rem;
+                    margin-top: 2rem 0 1rem 0;
                     padding: 0.5rem 0;
                     border: none;
                     outline: none;
@@ -149,6 +147,18 @@
                     &:active {
                         transform: scale(0.97);
                     }
+                }
+            }
+            .error {
+                color: $redDark;
+            }
+            .succes {
+                color: $greenDark;
+            }
+            .fallback {
+                a:visited {
+                    text-decoration: none;
+                    color: $white;
                 }
             }
         }
