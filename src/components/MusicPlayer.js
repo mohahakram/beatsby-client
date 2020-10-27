@@ -20,9 +20,6 @@ const MusicPlayer = (props) => {
     // get stream from backend with filename
     const source = currentBeat && domain + currentBeat.audioFile.fileName;
 
-    useEffect( () => {
-
-    },[currentBeat])
 
     var sound = new Howl({
         //[source],
@@ -30,6 +27,7 @@ const MusicPlayer = (props) => {
             // "http://www.hochmuth.com/mp3/Tchaikovsky_Rococo_Var_orch.mp3",
         html5: true,
         autoplay: isPlaying,
+        volume: props.volume,
         // onload: () => sound.play(),
         onplay: () => setIsPlaying(true),
         onend: () => setIsPlaying(false),
