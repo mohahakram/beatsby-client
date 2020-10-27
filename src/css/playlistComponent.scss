@@ -134,6 +134,7 @@
             }
             .cart {
                 width: 5%;
+                padding-right: 0.5rem;
                 visibility: hidden;
                 text-align: right;
                 svg:hover {
@@ -142,6 +143,7 @@
             }
             .in-cart {
                 width: 5%;
+                padding-right: 0.5rem;
                 visibility: hidden;
                 text-align: right;
                 color: $greenDark;
@@ -241,6 +243,7 @@
             }
             .cart {
                 width: 5%;
+                padding-right: 0.5rem;
                 text-align: right;
                 svg:hover {
                     transform: scale(1.2);
@@ -248,6 +251,7 @@
             }
             .in-cart {
                 width: 5%;
+                padding-right: 0.5rem;
                 text-align: right;
                 color: $greenLight;
                 svg:hover {
