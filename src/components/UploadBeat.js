@@ -3,8 +3,11 @@ import APIHandler from "../config/api/APIHandler";
 
 import UserContext from "../config/auth/UserContext";
 
-const UploadBeat = () => {
+const UploadBeat = (props) => {
     const [currentUser, setCurrentUser] = useContext(UserContext);
+    const [success, setSuccess] = useState();
+    const [error, setError] = useState();
+
 
     const [title, setTitle] = useState();
     const [artist, setArtist] = useState();
@@ -84,11 +87,14 @@ const UploadBeat = () => {
 
         try {
             await APIHandler.post("/beat/upload", data)
-                .then((res) => console.log(res))
-                .catch((err) => console.log(err));
-            // props.history.push('/main')
-        } catch (err) {
-            console.log(err);
+                .then( res => { return res.status === 200 && setSuccess(res.data.msg), console.log(res)})
+                .then( () => {
+                    setTimeout(() => {
+                        props.history.push('/main')
+                    }, 5000);
+                })
+        }catch (err) {
+            setError(err.response.data.msg);
         }
     };
 
@@ -159,7 +165,7 @@ const UploadBeat = () => {
                         autoComplete="off"
                     />
 
-                    <input type="file" name="audioFile" accept=".wav" />
+                    <input type="file" name="audioFile" accept=".wav, .mp3" />
                     {/* //TODO add cover image */}
                     {/* <input type="file" name="coverImg" accept=".jpg, .jpeg"/> */}
 
@@ -168,6 +174,17 @@ const UploadBeat = () => {
                     )} */}
                     <button>Upload</button>
                 </form>
+                {/* show error or success message */}
+                {error && (
+                    <div className="error">
+                        <p>{error}</p>
+                    </div>
+                )}
+                {success && (
+                    <div className="success">
+                        <p>{success}</p>
+                    </div>
+                )}
             </div>
         </div>
     );
