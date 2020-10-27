@@ -37,9 +37,22 @@
                 }
             }
             .playlist-infos {
-
                 .playlist-list {
                     .favourite-button,
+                    .bpm {
+                        display: none;
+                    }
+                    .contract {
+                        margin-right: 5rem;
+                    }
+                    .price {
+                        margin-right: 2rem;
+                    }
+                }
+                .current-track {
+                    .favourite-button {
+                        display: none;
+                    }
                     .bpm {
                         display: none;
                     }
