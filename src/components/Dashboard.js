@@ -6,6 +6,10 @@ import "../css/dashboard.scss";
 
 import UserContext from "../config/auth/UserContext";
 import AuthContext from "../config/auth/AuthContext";
+import BeatContext from "../config/context/BeatContext";
+import PlaylistContext from "../config/context/PlaylistContext";
+import PlayingContext from "../config/context/PlayingContext";
+import PauseContext from "../config/context/PlayingContext";
 
 import PlaylistComponent from "./PlaylistComponent";
 import { removeItem } from "../config/auth/LocalStorageSetup";
@@ -16,6 +20,10 @@ import { faChevronDown, faPowerOff, faShoppingBag } from "@fortawesome/free-soli
 const Dashboard = () => {
     const [currentUser, setCurrentUser] = useContext(UserContext);
     const [isAuthorized, setIsAuthorized] = useContext(AuthContext);
+    const [currentBeat, setCurrentBeat] = useContext(BeatContext);
+    const [currentPlaylist, setCurrentPlaylist] = useContext(PlaylistContext);
+    const [isPlaying, setIsPlaying] = useContext(PlayingContext);
+    const [isPaused, setIsPaused] = useContext(PauseContext);
 
     const [data, setData] = useState();
     const [showBeats, setShowBeats] = useState(false);
@@ -24,16 +32,18 @@ const Dashboard = () => {
     const [favourites, setFavourites] = useState();
     const [cart, setCart] = useState(0);
     const [cartTotalItems, setCartTotalItems] = useState(0);
+    const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
         const res = APIHandler.get("/dashboard").then((res) => {
             setData(res.data);
             setUploadedBeats(res.data.beats);
-            setFavourites(res.data.favourites);
+            setFavourites(res.data.favourites[0].favouriteList);
             //total items in cart
+            setRefresh(false);
             return res.data.cart[0]?.cartList ? setCartTotalItems(res.data.cart[0].cartList.length) : null;
         });
-    }, []);
+    }, [refresh]);
 
     // toggle between showing and hiding uploaded beats
     const ShowUploadedBeats = () => {
@@ -44,10 +54,76 @@ const Dashboard = () => {
         setShowFavourites(!showFavourites);
     };
 
+    const handleOnClickAddFavourite = async (id) => {
+        try {
+            await APIHandler.post(`/favourite/add/${id}`).then((res) => {
+                // refresh changed part so the user 
+                //can see it has been added 
+                return res.status === 200 && setRefresh(true)
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    
+    const handleOnClickDeleteFavourite = async (id) => {
+        try {
+            await APIHandler.post(`/favourite/delete/${id}`).then((res) => {
+                // refresh changed part so the user 
+                //can see it has been added 
+                res.status === 200 && setRefresh(true);
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const handleOnClickAddToCart = async (id) => {
+        try {
+            await APIHandler.post(`/cart/add/${id}`).then((res) => {
+                return res.status === 200 && setRefresh(true)
+            });
+            console.log("ok");
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    
+    const handleOnClickDeleteFromCart = async (id) => {
+        try {
+            await APIHandler.post(`/cart/delete/${id}`).then((res) => {
+                res.status === 200 && setRefresh(true);
+                ;
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     // destroys users session
     const handleLogOut = () => (
         removeItem("user_auth"), setCurrentUser(null), setIsAuthorized(false)
     );
+
+    // set clicked beat as current beat 
+    // and use it in different components
+    const handleOnClickSetCurrentBeat = (data) => {
+        setCurrentBeat(data);
+    };
+
+    const handleOnClickSetCurrentPlaylist = () => {
+        setCurrentPlaylist(cart)
+    }
+
+    // function passed as prop 
+    const handleOnClickIsPlaying = () => {
+        setIsPlaying(true);
+    };
+
+    // function passed as prop
+    const handleOnClickIsPaused = () => {
+        setIsPaused(true);
+    };
 
     return (
         <div className="dashboard-main-container">
@@ -122,11 +198,21 @@ const Dashboard = () => {
                 <div>
                     {/* if show beats is set to true then show content */}
                     {showBeats ? (
-                        uploadedBeats.length > 0 ? 
+                        uploadedBeats?.length > 0 ? 
                             <div className="playlist">
                                 <PlaylistComponent
                                     beatDetails={uploadedBeats}
                                     favouritesList={favourites}
+                                    onClickAddFavourite={handleOnClickAddFavourite}
+                                    onClickDeleteFavourite={handleOnClickDeleteFavourite}
+                                    onClickAddToCart={handleOnClickAddToCart}
+                                    onClickDeleteFromCart={handleOnClickDeleteFromCart}
+                                    currentBeat={currentBeat}
+                                    isPlaying={isPlaying}
+                                    onClickIsPlaying={handleOnClickIsPlaying}
+                                    onClickIsPaused={handleOnClickIsPaused}
+                                    onClickSetCurrentPlaylist={handleOnClickSetCurrentPlaylist}
+                                    onClickSetCurrentBeat={handleOnClickSetCurrentBeat}
                                 />
                             </div> : 
                             <div className="playlist">
@@ -149,11 +235,17 @@ const Dashboard = () => {
                 <div>
                     {/* if show favourites is set to true then show content */}
                     {showFavourites ? (
-                        favourites.length > 0 ?
+                        favourites?.length > 0 ?
                             <div className="playlist">
                                 <PlaylistComponent
-                                    beatDetails={uploadedBeats}
+                                    beatDetails={favourites}
                                     favouritesList={favourites}
+                                    currentBeat={currentBeat}
+                                    isPlaying={isPlaying}
+                                    onClickIsPlaying={handleOnClickIsPlaying}
+                                    onClickIsPaused={handleOnClickIsPaused}
+                                    onClickSetCurrentPlaylist={handleOnClickSetCurrentPlaylist}
+                                    onClickSetCurrentBeat={handleOnClickSetCurrentBeat}
                                 />
                             </div> :
                             <div className="playlist">
