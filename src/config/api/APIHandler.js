@@ -3,6 +3,7 @@ import axios from "axios";
 
 class APIHandler {
   constructor() {
+    
     let backend_uri = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_BACKEND_URL : "http://localhost:4001" ;
     let auth = localStorage.getItem("user_auth");
     let token = JSON.parse(auth);
@@ -32,6 +33,7 @@ class APIHandler {
     //   return Promise.reject(error);
     // });
   }
+
 
   checkRoute(route, config) {
     try {
